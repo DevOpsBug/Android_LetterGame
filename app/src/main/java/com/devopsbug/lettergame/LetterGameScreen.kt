@@ -117,7 +117,7 @@ fun LetterGameTopAppBar(
     modifier: Modifier = Modifier
 ) {
         TopAppBar(
-            title = { Text(stringResource(currentScreenTitle)) },
+            title = { Text(stringResource(currentScreenTitle), color = MaterialTheme.colorScheme.onPrimary) },
             navigationIcon = {
                 if (canNavigateBack) {
                     IconButton(onClick = navigateUp) {
@@ -128,9 +128,14 @@ fun LetterGameTopAppBar(
                     }
                 }
             },
-            colors = TopAppBarDefaults.mediumTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
             ),
+//            colors = TopAppBarDefaults.mediumTopAppBarColors(
+//                containerColor = MaterialTheme.colorScheme.primaryContainer
+//            ),
             modifier = modifier
 
         )
