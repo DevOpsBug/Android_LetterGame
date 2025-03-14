@@ -2,5 +2,5 @@
     <string name="app_name">LetterGame</string>
     <string name="back_button">Navigate Back</string>
     <string name="explore_screen">Explore Letters</string>
-    <string name="language_screen">Language Selection</string>
+    <string name="play_letter_game_screen">Play Letter Game</string>
 </resources>
