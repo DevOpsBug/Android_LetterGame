@@ -3,6 +3,7 @@ package com.devopsbug.lettergame.ui
 import androidx.lifecycle.ViewModel
 import com.devopsbug.lettergame.data.Datasource
 import com.devopsbug.lettergame.model.Language
+import com.devopsbug.lettergame.model.Letter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,9 +25,14 @@ class LetterGameViewModel : ViewModel() {
         )
     }
 
-    fun newLetter() {
+    fun newRandomLetter() {
+        val currentLetter = _uiState.value.currentLetter
+        var newLetter = _uiState.value.currentLetterSet.random()
+        while (newLetter == currentLetter) {
+            newLetter = uiState.value.currentLetterSet.random()
+        }
         _uiState.value = _uiState.value.copy(
-            currentLetter = _uiState.value.currentLetterSet.random()
+            currentLetter = newLetter
         )
     }
 }

@@ -9,12 +9,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -108,6 +105,8 @@ fun LetterGame() {
                     Log.d(TAG, "navHost: Calling route = ${LetterGameScreen.randomLetter.name}")
                     RandomLetterScreen(
                         currentLanguage = uiState.language,
+                        currentLetter = uiState.currentLetter,
+                        newRandomLetter = { viewModel.newRandomLetter() },
                         updateLanguage = { viewModel.updateLanguage(it) },
                     )
                 }
@@ -129,8 +128,7 @@ fun LetterGameTopAppBar(
             title = {
                 Row (
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .border(1.dp, Color.DarkGray),
+                        .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
@@ -139,7 +137,7 @@ fun LetterGameTopAppBar(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back_button),
-                            modifier = Modifier.border(1.dp, Color.DarkGray)
+                            modifier = Modifier
                         )
                     }
                 }
@@ -147,17 +145,16 @@ fun LetterGameTopAppBar(
                     Text(
                         stringResource(currentScreenTitle),
                         color = Color.White,
-                        //textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                        modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
+                        modifier = Modifier
 
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Image(
-                        painter = painterResource(R.drawable.devopsbug_bug_158x100),
+                        painter = painterResource(R.drawable.letter_game_launcher_foreground),
                         contentDescription = "Letter Game Icon",
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
-                            .fillMaxHeight()
+                            .fillMaxWidth(fraction = 0.25f)
                             .padding(end = 16.dp)
                     )
                 }
