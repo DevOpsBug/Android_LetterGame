@@ -5,11 +5,13 @@ import android.media.MediaPlayer
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -23,6 +25,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.devopsbug.lettergame.data.Languages
 import com.devopsbug.lettergame.model.Language
 import com.devopsbug.lettergame.model.Letter
@@ -47,6 +50,33 @@ object LetterGameUtils {
         }
     }
 
+    @Composable
+    fun LanguageLevelRow(
+        currentLanguage: Language,
+        currentLevel: Int
+    ){
+        Row (
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                //.padding(start = 24.dp, end = 24.dp)
+
+        ){
+            Image(
+                painter = painterResource(currentLanguage.flagImage),
+                contentDescription = null,
+                modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
+            )
+            Text(
+                text = "Level $currentLevel",
+                fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.primaryContainer,
+                //modifier = Modifier.border(width = 1.dp, color = Color.DarkGray)
+
+            )
+        }
+    }
 
     //function to display language selection row
     @Composable

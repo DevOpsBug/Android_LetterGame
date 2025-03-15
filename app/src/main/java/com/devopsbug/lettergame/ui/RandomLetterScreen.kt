@@ -28,6 +28,7 @@ import com.devopsbug.lettergame.R
 import com.devopsbug.lettergame.data.Languages
 import com.devopsbug.lettergame.model.Language
 import com.devopsbug.lettergame.model.Letter
+import com.devopsbug.lettergame.util.LetterGameUtils.LanguageLevelRow
 import com.devopsbug.lettergame.util.LetterGameUtils.LanguageSelectionRow
 import com.devopsbug.lettergame.util.LetterGameUtils.getRawResourceId
 import com.devopsbug.lettergame.util.LetterGameUtils.playAudio
@@ -35,45 +36,49 @@ import com.devopsbug.lettergame.util.LetterGameUtils.playAudio
 
 @Composable
 fun RandomLetterScreen(
-    currentLanguage: Language = Languages.german,
+    currentLanguage: Language,
     currentLetter: Letter,
-    updateLanguage: (Language) -> Unit,
+    currentLevel: Int,
     newRandomLetter: () -> Unit
     ) {
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .padding(start = 24.dp, end = 24.dp)
     ){
-        Column (
+        Spacer(modifier = Modifier.height(16.dp))
+        Column(
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier.fillMaxWidth().padding(24.dp)
-        ){
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            LanguageLevelRow(
+                currentLanguage = currentLanguage,
+                currentLevel = currentLevel
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "How to play:",
-                fontSize = 36.sp,
+                fontSize = 30.sp,
             )
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "1. Choose a language\n" +
-                        "2. Click the letter (make sure audio is on)"
+                text = "1. Try to say the sound of the letter\n" +
+                        "2. Click the letter to hear the correct sound",
+                fontSize = 16.sp
             )
         }
+        Spacer(modifier = Modifier.height(16.dp))
         Row {
             Image(
                 painter = painterResource(R.drawable.devopsbug_bug_158x100),
-                contentDescription = "Ladybug icon"
+                contentDescription = "Ladybug icon",
             )
             Spacer(modifier = Modifier.weight(1f))
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        LanguageSelectionRow(
-            currentLanguage = currentLanguage,
-            updateLanguage = updateLanguage,
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .border(3.dp, MaterialTheme.colorScheme.primaryContainer)
-
-        )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         Row (
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
@@ -103,7 +108,7 @@ private fun RandomLetterTile(letter: Letter, language: Language, newRandomLetter
         },
         modifier = modifier,
         shape = RoundedCornerShape(percent = 20),
-        border = BorderStroke(1.dp, Color.DarkGray),
+        border = BorderStroke(5.dp, Color.DarkGray),
         contentPadding = PaddingValues(12.dp),
     ) {
         Text(

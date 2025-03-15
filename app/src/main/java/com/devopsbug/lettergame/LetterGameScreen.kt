@@ -7,18 +7,25 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -73,8 +80,7 @@ fun LetterGame() {
         Scaffold(
             topBar = {
                 LetterGameTopAppBar(
-                    canNavigateBack = navController.previousBackStackEntry != null,
-                    navigateUp = { navController.navigateUp() },
+                    navigateHome = { navController.navigate(LetterGameScreen.start.name) },
                     currentScreenTitle = currentScreen.title,
                 )
             },
@@ -82,6 +88,7 @@ fun LetterGame() {
                 .background(color = MaterialTheme.colorScheme.background)
         ) { innerPadding ->
             val uiState by viewModel.uiState.collectAsState()
+
             NavHost(
                 navController = navController,
                 startDestination = LetterGameScreen.start.name,
@@ -91,14 +98,24 @@ fun LetterGame() {
                     Log.d(TAG, "navHost Calling route = ${LetterGameScreen.start.name}")
                     LetterGameStartScreen(
                         onClickExplore = { navController.navigate(LetterGameScreen.exploreLetters.name) },
-                        onClickLanguage = { navController.navigate(LetterGameScreen.randomLetter.name) }
+                        //onClickLanguage = { navController.navigate(LetterGameScreen.randomLetter.name) },
+                        updateLanguage = { viewModel.updateLanguage(it) },
+                        currentLevel = uiState.level,
+                        updateLevel = { viewModel.updateLevel(it) },
+                        currentLanguage = uiState.language,
                     )
                 }
                 composable(route = LetterGameScreen.exploreLetters.name) {
-                    Log.d(TAG, "navHost: Calling route = ${LetterGameScreen.exploreLetters.name}")
+                    Log.d(
+                        TAG,
+                        "navHost: Calling route = ${LetterGameScreen.exploreLetters.name}"
+                    )
                     ExploreLettersScreen(
                         currentLanguage = uiState.language,
                         updateLanguage = { viewModel.updateLanguage(it) },
+                        currentLevel = uiState.level,
+                        currentLetterSet = uiState.currentLetterSet,
+                        continueToRandomLetterScreen = { navController.navigate(LetterGameScreen.randomLetter.name) }
                     )
                 }
                 composable(route = LetterGameScreen.randomLetter.name) {
@@ -106,11 +123,12 @@ fun LetterGame() {
                     RandomLetterScreen(
                         currentLanguage = uiState.language,
                         currentLetter = uiState.currentLetter,
+                        currentLevel = uiState.level,
                         newRandomLetter = { viewModel.newRandomLetter() },
-                        updateLanguage = { viewModel.updateLanguage(it) },
                     )
                 }
             }
+
         }
 
     }
@@ -120,8 +138,7 @@ fun LetterGame() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LetterGameTopAppBar(
-    canNavigateBack: Boolean,
-    navigateUp: () -> Unit,
+    navigateHome: () -> Unit,
     @StringRes currentScreenTitle: Int,
 ) {
         TopAppBar(
@@ -132,30 +149,27 @@ fun LetterGameTopAppBar(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    if (canNavigateBack) {
-                    IconButton(onClick = navigateUp) {
+                    IconButton(onClick = navigateHome) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.Outlined.Home,
                             contentDescription = stringResource(R.string.back_button),
-                            modifier = Modifier
+                            modifier = Modifier.fillMaxHeight()
                         )
                     }
-                }
-                    Spacer(modifier = Modifier.weight(1f))
+                    //Spacer(modifier = Modifier.weight(1f))
                     Text(
                         stringResource(currentScreenTitle),
                         color = Color.White,
                         modifier = Modifier
-
+                            .fillMaxWidth(0.7f)
                     )
-                    Spacer(modifier = Modifier.weight(1f))
                     Image(
                         painter = painterResource(R.drawable.letter_game_launcher_foreground),
                         contentDescription = "Letter Game Icon",
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
-                            .fillMaxWidth(fraction = 0.25f)
-                            .padding(end = 16.dp)
+                            .fillMaxWidth(fraction = 0.7f)
+                            .padding(6.dp)
                     )
                 }
                     },
@@ -164,6 +178,6 @@ fun LetterGameTopAppBar(
                 titleContentColor = MaterialTheme.colorScheme.onPrimary,
                 navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
             ),
-            modifier = Modifier.padding(0.dp)
+
         )
 }

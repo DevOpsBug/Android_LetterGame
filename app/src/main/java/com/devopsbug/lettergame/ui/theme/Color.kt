@@ -2,6 +2,8 @@ package com.devopsbug.lettergame.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val greenButtonColor = Color(0xFF229B29)
+
 val primaryLight = Color(0xFF0077CF)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF0077CF)
