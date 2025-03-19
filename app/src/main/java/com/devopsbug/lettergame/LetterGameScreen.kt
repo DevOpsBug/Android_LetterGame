@@ -164,11 +164,11 @@ fun LetterGameTopAppBar(
                             .fillMaxWidth(0.7f)
                     )
                     Image(
-                        painter = painterResource(R.drawable.letter_game_launcher_foreground),
+                        painter = painterResource(R.drawable.ic_launcher_foreground),
                         contentDescription = "Letter Game Icon",
-                        contentScale = ContentScale.Fit,
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .fillMaxWidth(fraction = 0.7f)
+                            .fillMaxWidth(fraction = 1f)
                             .padding(6.dp)
                     )
                 }

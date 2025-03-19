@@ -75,6 +75,7 @@ fun RandomLetterScreen(
             Image(
                 painter = painterResource(R.drawable.devopsbug_bug_158x100),
                 contentDescription = "Ladybug icon",
+                modifier = Modifier.fillMaxWidth(fraction = 0.2f)
             )
             Spacer(modifier = Modifier.weight(1f))
         }
