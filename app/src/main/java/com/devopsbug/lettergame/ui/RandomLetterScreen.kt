@@ -2,7 +2,6 @@ package com.devopsbug.lettergame.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,11 +23,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devopsbug.lettergame.R
-import com.devopsbug.lettergame.data.Languages
 import com.devopsbug.lettergame.model.Language
 import com.devopsbug.lettergame.model.Letter
 import com.devopsbug.lettergame.util.LetterGameUtils.LanguageLevelRow
-import com.devopsbug.lettergame.util.LetterGameUtils.LanguageSelectionRow
 import com.devopsbug.lettergame.util.LetterGameUtils.getRawResourceId
 import com.devopsbug.lettergame.util.LetterGameUtils.playAudio
 
@@ -94,7 +90,6 @@ fun RandomLetterScreen(
 
             )
         }
-
     }
 }
 
@@ -118,3 +113,4 @@ private fun RandomLetterTile(letter: Letter, language: Language, newRandomLetter
         )
     }
 }
+
